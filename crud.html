@@ -3,73 +3,45 @@
     <head>
         <meta charset="UTF-8">
         <title>Documents</title>
-        <script>
-            async function loadStudents() {
-                const response = await fetch("https://6adea73d4e88f1bba4a53cc5.mockapi.io/students");
-
-                if(!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                const students = await response.json();
-                renderStudents(students);
-            } 
-
-            function renderStudents(students) {
-                const list = document.querySelector("#studentList");
-                list.replaceChild();
-
-                students.forEach(student => {
-                    const li = document.createElement("li");
-                    li.textContent = `${student.name} (${student.age})`;
-                    list.appendChild(li);
-                })
-            }
-
-            async function addStudent(student) {
-                const response = await fetch("https://6adea73d4e88f1bba4a53cc5.mockapi.io/students", {
-                    method : "POST",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
-                    body : JSON.stringify(student)
-                });
-
-                if(!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                await loadStudents();
-            }
-
-            async function updateStudent(id, updateDate) {
-                const response = await fecth(`${"https://6adea73d4e88f1bba4a53cc5.mockapi.io/students"}/${id}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type" : "application/json"
-                    },
-                    body : JSON.stringify(updateDate)
-                });
-
-                if(!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                await loadStudents();
-            }
-
-            async function deleteStudent(id) {
-                const response = await fecth(`${"https://6adea73d4e88f1bba4a53cc5.mockapi.io/students"}/${id}`, {
-                    method:"DELETE"
-                });
-
-                if(!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                await loadStudents();
-            }
-        </script>
+        <link rel = "stylesheet" href="index.css">
+        <script src="./index.js" defer></script>
     </head>
     <body>
+        <div class = "container">
+            <h3 class = "title">학생 관리 Form</h1>
 
+            <fieldset class = "form">
+                <form id="studentForm">
+                    <input type ="hidden" id="studentId">
+
+                    <label form="name">name:</label>
+                    <input type="text" id="name" placehoder="이름을 입력하세요."><br>
+
+                    <label form="age">age:</label>
+                    <input type="number" id="age" placehoder="나이를 입력하세요."><br>
+
+                    <label form="major">major:</label>
+                    <input type="text" id="major" placehoder="전공을 입력하세요."><br>
+
+                    <label form="email">email:</label>
+                    <input type="text" id="email" placehoder="이메일을 입력하세요."><br>
+
+                    <label form="grade">grade:</label>
+                    <input type="number" id="grade" placehoder="학년을 입력하세요."><br>
+
+                    <button type = "submit" id="addbtn">추가</button>
+                    <button id="cancelBtn" hidden>수정 취소</button>
+                </form>
+            </fieldset>
+
+            <div class = "box">
+                <div class ="search">
+                    <input type = "text" id = "searchInput" placeholder="검색하세요.">
+                </div>
+    
+                <h3>학생 목록</h3>
+                <ul id="studentList"></ul>
+            </div>
+        </div>
     </body>
 </html>
