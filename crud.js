@@ -1,4 +1,3 @@
-
 let allStudents = [];
 
 async function loadStudents() {
@@ -18,7 +17,7 @@ function renderStudents(students) {
 
     students.forEach(student => {
         const li = document.createElement("li");
-        li.textContent = `${student.name} (${student.age}) | ${student.major} | ${student.grade}학년 `;
+        li.textContent = `${student.name} (${student.age}) | ${student.gender} | ${student.major} | ${student.grade}학년 `;
 
         const editBtn = document.createElement("button");
         editBtn.textContent = "수정";
@@ -28,6 +27,7 @@ function renderStudents(students) {
             document.querySelector("#age").value = student.age;
             document.querySelector("#major").value = student.major;
             document.querySelector("#grade").value = student.grade;
+            document.querySelector("#gender").value = student.gender;
 
             document.querySelector("#addbtn").textContent = "수정";
             document.querySelector("#cancelBtn").hidden = false;
@@ -107,12 +107,13 @@ form.addEventListener("submit", async function(event) {
     const age = Number(document.querySelector("#age").value);
     const major = document.querySelector("#major").value;
     const grade = Number(document.querySelector("#grade").value);
+    const gender = document.querySelector("#gender").value;
  
     if (name.length < 2) {
         alert("이름은 2자 이상 입력하세요.");
         return;
     }
-    if (age === "") {
+    if (age < 1) {
         alert("나이를 입력하세요.");
         return;
     }
@@ -124,12 +125,18 @@ form.addEventListener("submit", async function(event) {
         alert("학년은 1~6 사이로 입력하세요.");
         return;
     }
+
+    if (gender === "") {
+        alert("성별을 선택하세요.");
+        return;
+    }
  
     const student = {
         name: name,
         age: age,
         major: major,
-        grade: grade
+        grade: grade,
+        gender: gender
     };
  
     try {

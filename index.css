@@ -64,3 +64,7 @@ button {
     color : black;
     text-decoration: none;
 }
+
+#addbtn {
+    margin-top : 10px;
+}
